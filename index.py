@@ -8,8 +8,13 @@ def generateOddNumber():
     
     return odd_number
 
+def isNumberOdd(number):
+    if (number % 2 == 0):
+        return False
+    else:
+        return True
 
 x = generateOddNumber()
 print(x)
 print(x.bit_length())
-print(x % 2)
+print(isNumberOdd(x))
