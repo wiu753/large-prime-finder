@@ -1,10 +1,10 @@
 import random
 
-def generate_odd_number():
-    odd_number = random.randrange(1, 2**1024, 2)
+def generate_odd_number(bit_size):
+    odd_number = random.randrange(1, 2**bit_size, 2)
     
-    while (odd_number.bit_length() != 1024):
-        odd_number = random.randrange(1, 2**1024, 2)
+    while (odd_number.bit_length() != bit_size):
+        odd_number = random.randrange(1, 2**bit_size, 2)
     
     return odd_number
 
@@ -58,19 +58,17 @@ def solovoy_strassen(number, iterations):
     
     return True
 
-test = generate_odd_number()
-print(test)
-print(isNumberOdd(test))
-print(test.bit_length())
 
-for i in range(1000):
-    number = generate_odd_number()
-    if (miller_rabin(number, 100)):
-        print("Miller Rabin: Prime number is {}".format(number))
-        break
+prime_numbers = []
+miller_rabin_iterations = 100
+solovoy_strassen_iterations = 100
+numbers_tested = 0
 
-for i in range(1000):
-    number = generate_odd_number()
-    if (solovoy_strassen(number, 100)):
-        print("Solowoy Strassen: Prime number is {}".format(number))
-        break
+while (len(prime_numbers) < 2):
+    number_to_test = generate_odd_number()
+    numbers_tested += 1
+    if (solovoy_strassen(number_to_test, solovoy_strassen_iterations) and miller_rabin(number_to_test, miller_rabin_iterations)):
+        prime_numbers.append(number_to_test)
+
+print("Prime number one: {} \nPrime number two: {}".format(prime_numbers[0], prime_numbers[1]))
+print("Numbers tested: ", numbers_tested)
